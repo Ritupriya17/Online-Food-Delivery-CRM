@@ -1,140 +1,126 @@
-# Online Food Delivery CRM 🍔
-*A Salesforce-based CRM for managing food orders, deliveries, complaints, and dashboards.*
+# 🍽️ Online Food Delivery CRM
 
----
+The **Online Food Delivery CRM** is a Salesforce-based application designed to streamline the end-to-end food delivery process for restaurants. It enables restaurant managers to manage menu items, process food orders, handle customer complaints, and generate insightful reports and dashboards — all within a single, integrated platform.
 
-## 📌 Project Overview
-
-The **Online Food Delivery CRM** is a comprehensive Customer Relationship Management system built on Salesforce, tailored for food delivery businesses. It automates and manages the entire food delivery process—from capturing customer orders, assigning delivery agents, tracking deliveries, handling complaints, sending notifications, and generating insightful dashboards.
-
-This project was developed as a capstone for a Salesforce Virtual Internship.
+This capstone project was developed as a part of my **Salesforce Developer Virtual Internship** by **SmartBridge in Collaboration with Salesforce**, to demonstrate real-world CRM implementation in the food delivery domain.
 
 ---
 
 ## 🚀 Features
 
-- **Order Management**: Seamless creation, tracking, and updating of customer orders.
-- **Delivery Assignment & Tracking**: Automatic assignment of orders to available delivery agents and real-time tracking.
-- **Complaint Handling**: Efficient logging, tracking, and resolution of customer complaints.
-- **SMS Notifications**: Integration with Twilio for real-time SMS updates to customers and delivery agents.
-- **Payment Gateway**: Mock integration for payment status and tracking.
-- **Google Maps Visualization**: Route and delivery tracking using Google Maps Embed API.
-- **Reporting & Dashboards**: Pre-built dashboards for sales trends, delivery performance, and customer satisfaction.
+- **Restaurant & Menu Management**: Create and manage restaurant details and their menu items.  
+- **Order Management**: Place, track, and manage food orders efficiently.  
+- **Complaint Handling**: Log customer complaints and automatically update related order status.  
+- **Role-Based Access**: Different access levels for Restaurant Managers, Delivery Agents, and Executives.  
+- **Automated Notifications**: Email alerts for order confirmation and complaint resolution.  
+- **Reports & Dashboards**: Monitor business performance, top-selling menu items, and complaints.  
+- **Data Management**: Import/export data using Salesforce Data Import Wizard.  
+- **Secure Access & Login**: Profile-based permissions, IP restrictions, and session settings.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Salesforce Sales Cloud / Service Cloud**
-- **Apex**: Backend logic, custom APIs, triggers, and classes.
-- **Lightning Web Components (LWC)**: Modern Salesforce UI components.
-- **Salesforce Flows**: Automation for business processes (order assignment, notifications, etc.).
-- **Twilio API**: For sending SMS notifications.
-- **Google Maps Embed**: For visualizing delivery routes.
-- **Mock Payment Integration**: Simulated payment flows for demonstration.
+- **Salesforce Platform** – Admin + Developer setup  
+- **Lightning App** – Centralized app for managing restaurants, orders, and complaints  
+- **Apex** – Classes for business logic:  
+  - `FoodOrderService` – Recalculates totals and handles order logic  
+  - `OrderLineItemHandler` – Syncs line item changes with parent orders  
+  - `ComplaintHandler` – Updates food orders based on complaints  
+- **Triggers** – Automated backend updates for Orders, Line Items, and Complaints  
+- **SOQL / SOSL** – Data retrieval and search  
+- **Salesforce Flows** – Automations for notifications and status updates  
+- **Reports & Dashboards** – Visual analytics for performance and sales  
+- **Field Level Security, Sharing Settings, Login IP Ranges** – Security controls
 
 ---
 
-## 📂 Repository Structure
+## 📑 Application Lifecycle
 
-```
-/docs         # Project documents, screenshots, user guides
-/src          # Salesforce metadata (Apex classes, LWC, Flows)
-README.md     # Project overview and documentation
-```
+### 1. Restaurant & Menu Setup
+**Restaurant Manager** adds restaurant records and creates menu items with details like name, category, and price. This acts as the foundation for placing orders.
 
 ---
 
-## 🎯 Use Cases
-
-1. **Order Management**
-   - Customers place orders via integrated interfaces.
-   - Orders are logged in Salesforce for tracking and assignment.
-
-2. **Delivery Assignment**
-   - Orders are automatically assigned to available delivery agents based on location and workload.
-   - Assignment logic implemented using Flows and Apex.
-
-3. **Order Tracking**
-   - Customers and agents can track delivery status in real-time.
-   - Notifications are sent at key points (order confirmation, out for delivery, delivered).
-
-4. **Complaint Handling**
-   - Customers can raise complaints via web or phone.
-   - Complaints are tracked, assigned to agents, and resolved with status updates.
-
-5. **Reporting & Analytics**
-   - Sales, delivery times, agent performance, and complaint types visualized in dashboards.
-   - Reports can be filtered by date, agent, or region.
+### 2. Placing Food Orders
+Orders are created by selecting menu items. Validation rules ensure required fields are filled. Total amounts are auto-calculated through Apex handlers and roll-up fields.
 
 ---
 
-## 🔗 Integrations
+### 3. Order Line Items & Calculations
+When items are added, updated, or deleted, the **OrderLineItemTrigger** calls the handler to recalculate the parent order total automatically.
 
-- **Twilio SMS**
-  - Sends SMS to customers when order status changes.
-  - Notifies delivery agents of new assignments.
+---
 
-- **Google Maps Embed**
-  - Visualizes delivery routes from restaurant to customer.
-  - Displays estimated delivery time on dashboards.
+### 4. Complaint Handling Workflow
+Customers’ complaints are logged through the Complaint object. The **ComplaintHandler** updates the related order status (e.g., “Under Review” or “Resolved”) automatically using Apex logic.
 
-- **(Mock) Payment Gateway**
-  - Simulates payment status updates within the CRM.
+---
+
+### 5. Automated Notifications
+Flows and Email Alerts send automatic emails:
+- **Order Confirmation** – Sent to customers after order creation  
+- **Complaint Resolution** – Sent when a complaint status is updated  
+
+---
+
+### 6. Reporting & Analytics
+Built-in reports and dashboards provide:
+- Top-selling menu items  
+- Total revenue  
+- Complaint statistics  
+- Restaurant performance
+
+Executives can analyze trends to make data-driven decisions.
+
+---
+
+### 7. Role-Based Access & Security
+- **Restaurant Manager** – Full access to restaurants, orders, complaints  
+- **Delivery Agent** – Restricted access (no sensitive fields like ID Proof)  
+- **Executive** – Read-only access to reports and dashboards  
+Security is enhanced using **Field Level Security**, **IP Ranges**, and **Session Settings**.
 
 ---
 
 ## 📊 Dashboards
 
-- **Sales Trends**: View sales over time, by day, week, or month.
-- **Delivery Times**: Analyze average delivery durations and bottlenecks.
-- **Agent Performance**: Compare delivery agents by volume and customer feedback.
-- **Complaints by Type**: Track and categorize customer complaints for process improvement.
+- **Restaurant Business Overview** – Total orders, revenue, and top items  
+- **Complaint Dashboard** – Complaint counts by type and resolution time  
+- **Performance Dashboard** – Real-time restaurant metrics  
 
 ---
 
 ## 🚦 Installation & Setup
 
-1. **Clone the Repo**
-    ```bash
-    git clone https://github.com/Ritupriya17/Online-Food-Delivery-CRM.git
-    ```
+### 1. Clone Repository
+```bash
+git clone https://github.com/Ritupriya17/Online-Food-Delivery-CRM.git
+cd Online-Food-Delivery-CRM
+```
 
-2. **Deploy to Salesforce**
-    - Use Salesforce CLI (sfdx) to deploy `/src` metadata to your Salesforce org.
-    - Assign necessary permission sets and licenses.
+### 2. Deploy to Salesforce
+- Use Salesforce Setup to create custom objects, fields, flows, triggers, and dashboards as described in documentation.
+- Assign profiles, permission sets, and configure IP restrictions as needed.
 
-3. **Configure Twilio**
-    - Create a Twilio account.
-    - Add Twilio credentials to Salesforce Custom Metadata/Settings.
-
-4. **Google Maps API**
-    - Obtain an API key for Google Maps Embed.
-    - Configure the key in Salesforce Custom Metadata/Settings.
-
-5. **Demo Data**
-    - Import sample data files (if provided) from `/docs` for testing.
-
+### 3. Manual Setup
+- Add sample Restaurant and Menu records.
+- Create Food Orders and Complaint records for testing.
+- Verify dashboards and reports.
 
 ---
 
 ## 🤝 Contributing
 
 Contributions, bug reports, and suggestions are welcome!
-- Fork the repo and create a pull request.
-- Open issues for bugs or feature requests.
+
+- Fork the repository
+- Open issues for bug reports or feature requests
+- Create pull requests for proposed changes
 
 ---
 
 ## 👩‍💻 Author
 
-Developed by **Ritupriya17**  
-As part of a **Salesforce Virtual Internship Capstone Project**.
-
----
-
-## 📄 License
-
-This project is for educational/demo purposes. For commercial use, please contact the author.
-
----
+Developed by Ritupriya17  
+As part of a Salesforce Virtual Internship Capstone Project.
